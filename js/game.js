@@ -20,7 +20,9 @@ var gameProperties = {
     ballVelocityIncrement: 25,
     ballReturnCount: 4,
 
-    scoreToWin: 11,
+    scoreToWin: 2,
+
+    winningSoundDelay: 200 //ms
 };
 
 var graphicAssets = {
@@ -41,7 +43,7 @@ var soundAssets = {
     ballMissedURL: 'assets/ballMissed',
     ballMissedName: 'ballMissed',
 
-    gameWinningURL: 'asserts/gameWinning',
+    gameWinningURL: 'assets/gameWinning',
     gameWinningName: 'gameWinning',
 
     mp4URL: '.m4a',
@@ -342,16 +344,20 @@ var mainState = {
         this.updateScoreTextFields();
 
         if (this.scoreLeft >= gameProperties.scoreToWin) {
-            this.sndGameWinning.play();
+            game.time.events.add(gameProperties.winningSoundDelay, this.playWinning, this);
             this.winnerLeft.visible = true;
             this.startDemo();
         } else if (this.scoreRight >= gameProperties.scoreToWin) {
-            this.sndGameWinning.play();
+            game.time.events.add(gameProperties.winningSoundDelay, this.playWinning, this);
             this.winnerRight.visible = true;
             this.startDemo();
         } else {
             this.resetBall();
         }
+    },
+
+    playWinning: function () {
+        this.sndGameWinning.play();
     },
 
     resetScores: function () {
