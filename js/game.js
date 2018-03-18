@@ -20,9 +20,9 @@ var gameProperties = {
     ballVelocityIncrement: 25,
     ballReturnCount: 4,
 
-    scoreToWin: 2,
+    scoreToWin: 11,
 
-    winningSoundDelay: 200 //ms
+    winningSoundDelay: 600 //ms
 };
 
 var graphicAssets = {
@@ -40,11 +40,11 @@ var soundAssets = {
     ballHitURL: 'assets/ballHit',
     ballHitName: 'ballHit',
 
-    ballMissedURL: 'assets/ballMissed',
-    ballMissedName: 'ballMissed',
-
     gameWinningURL: 'assets/gameWinning',
     gameWinningName: 'gameWinning',
+
+    ballMissedURLs: ['assets/Oje1', 'assets/Oje2', 'assets/Oje3', 'assets/Oje4', 'assets/OjeS1', 'assets/OjeS2'],
+    ballMissedNames: ['oje1', 'oje2', 'oje3', 'oje4', 'ojeS1', 'ojeS2'],
 
     mp4URL: '.m4a',
     oggURL: '.ogg'
@@ -81,8 +81,8 @@ var mainState = function(game) {
 
     this.sndBallHit;
     this.sndBallBounce;
-    this.sndBallMissed;
     this.sndGameWinning;
+    this.sndArrBallMissed;
 
     this.instructions;
     this.winnerLeft;
@@ -106,8 +106,11 @@ var mainState = {
 
         game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL+soundAssets.oggURL]);
         game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL+soundAssets.oggURL]);
-        game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL+soundAssets.oggURL]);
         game.load.audio(soundAssets.gameWinningName, [soundAssets.gameWinningURL+soundAssets.oggURL]);
+
+        for (var i = 0; i<soundAssets.ballMissedURLs.length; i++){
+            game.load.audio(soundAssets.ballMissedNames[i], [soundAssets.ballMissedURLs[i]+soundAssets.oggURL]);
+        }
     },
 
     // The create function is called after all assets are loaded and ready for use. This is where we add all our sprites, sounds, levels, text, etc.
@@ -200,8 +203,12 @@ var mainState = {
     initSounds: function () {
         this.sndBallHit = game.add.audio(soundAssets.ballHitName);
         this.sndBallBounce = game.add.audio(soundAssets.ballBounceName);
-        this.sndBallMissed = game.add.audio(soundAssets.ballMissedName);
         this.sndGameWinning = game.add.audio(soundAssets.gameWinningName);
+
+        this.sndArrBallMissed = [];
+        for (var i = 0; i<soundAssets.ballMissedURLs.length; i++){
+            this.sndArrBallMissed.push(game.add.audio(soundAssets.ballMissedNames[i]));
+        }
     },
 
     startDemo: function () {
@@ -331,7 +338,7 @@ var mainState = {
     },
 
     ballOutOfBounds: function () {
-        this.sndBallMissed.play();
+        this.playRandomMiss();
 
         if (this.ballSprite.x < 0) {
             this.missedSide = 'left';
@@ -358,6 +365,11 @@ var mainState = {
 
     playWinning: function () {
         this.sndGameWinning.play();
+    },
+
+    playRandomMiss: function () {
+        var randomSound = game.rnd.pick(this.sndArrBallMissed);
+        randomSound.play();
     },
 
     resetScores: function () {
