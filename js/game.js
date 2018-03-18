@@ -92,7 +92,7 @@ var mainState = function(game) {
 };
 
 var labels = {
-    clickToStart: 'Left paddle: A to move up, Z to move down.\n\nRight paddle: UP and DOWN arrow keys.\n\n- click to start -',
+    clickToStart: 'Left paddle: A to move up, Y to move down.\n\nRight paddle: UP and DOWN arrow keys.\n\n- click to start -',
     winner: 'Winner!',
 };
 
@@ -194,7 +194,7 @@ var mainState = {
 
     initKeyboard: function () {
         this.paddleLeft_up = game.input.keyboard.addKey(Phaser.Keyboard.A);
-        this.paddleLeft_down = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        this.paddleLeft_down = game.input.keyboard.addKey(Phaser.Keyboard.Y);
 
         this.paddleRight_up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         this.paddleRight_down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
