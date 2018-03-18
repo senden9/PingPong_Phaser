@@ -41,6 +41,9 @@ var soundAssets = {
     ballMissedURL: 'assets/ballMissed',
     ballMissedName: 'ballMissed',
 
+    gameWinningURL: 'asserts/gameWinning',
+    gameWinningName: 'gameWinning',
+
     mp4URL: '.m4a',
     oggURL: '.ogg'
 };
@@ -77,6 +80,7 @@ var mainState = function(game) {
     this.sndBallHit;
     this.sndBallBounce;
     this.sndBallMissed;
+    this.sndGameWinning;
 
     this.instructions;
     this.winnerLeft;
@@ -101,6 +105,7 @@ var mainState = {
         game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL+soundAssets.oggURL]);
         game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL+soundAssets.oggURL]);
         game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL+soundAssets.oggURL]);
+        game.load.audio(soundAssets.gameWinningName, [soundAssets.gameWinningURL+soundAssets.oggURL]);
     },
 
     // The create function is called after all assets are loaded and ready for use. This is where we add all our sprites, sounds, levels, text, etc.
@@ -194,6 +199,7 @@ var mainState = {
         this.sndBallHit = game.add.audio(soundAssets.ballHitName);
         this.sndBallBounce = game.add.audio(soundAssets.ballBounceName);
         this.sndBallMissed = game.add.audio(soundAssets.ballMissedName);
+        this.sndGameWinning = game.add.audio(soundAssets.gameWinningName);
     },
 
     startDemo: function () {
@@ -336,9 +342,11 @@ var mainState = {
         this.updateScoreTextFields();
 
         if (this.scoreLeft >= gameProperties.scoreToWin) {
+            this.sndGameWinning.play();
             this.winnerLeft.visible = true;
             this.startDemo();
         } else if (this.scoreRight >= gameProperties.scoreToWin) {
+            this.sndGameWinning.play();
             this.winnerRight.visible = true;
             this.startDemo();
         } else {
