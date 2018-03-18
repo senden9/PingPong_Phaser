@@ -98,9 +98,9 @@ var mainState = {
         game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
         game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
 
-        game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL+soundAssets.mp4URL, soundAssets.ballBounceURL+soundAssets.oggURL]);
-        game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL+soundAssets.mp4URL, soundAssets.ballHitURL+soundAssets.oggURL]);
-        game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL+soundAssets.mp4URL, soundAssets.ballMissedURL+soundAssets.oggURL]);
+        game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL+soundAssets.oggURL]);
+        game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL+soundAssets.oggURL]);
+        game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL+soundAssets.oggURL]);
     },
 
     // The create function is called after all assets are loaded and ready for use. This is where we add all our sprites, sounds, levels, text, etc.
@@ -318,6 +318,7 @@ var mainState = {
         if(this.ballReturnCount >= gameProperties.ballReturnCount) {
             this.ballReturnCount = 0;
             this.ballVelocity += gameProperties.ballVelocityIncrement;
+            console.log("More speed! Now", this.ballVelocity);
         }
     },
 
